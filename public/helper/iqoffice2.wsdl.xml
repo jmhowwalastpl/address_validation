@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="iqoffice2" targetNamespace="http://intechsolutions.com.au/soap2/" xmlns:tns="http://intechsolutions.com.au/soap2/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:ns2="http://intechsolutions.com.au/soap2/" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/" xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<types>
+ <schema targetNamespace="http://intechsolutions.com.au/soap2/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:ns2="http://intechsolutions.com.au/soap2/" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="http://www.w3.org/2004/08/xop/include"/>
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <complexType name="NameValuePair">
+   <sequence>
+     <element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Value" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="NameValueArray">
+   <sequence>
+     <element name="item" type="ns2:NameValuePair" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="StringArray">
+   <sequence>
+     <element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="OutputFieldInfo">
+   <sequence>
+     <element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Size" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="OutputFieldInfoArray">
+   <sequence>
+     <element name="item" type="ns2:OutputFieldInfo" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="AttachmentData">
+   <sequence>
+     <element ref="xop:Include" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="MatchResultItem">
+   <sequence>
+     <element name="Record" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Type" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Pass" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Score" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="MatchResultArray">
+   <sequence>
+     <element name="item" type="ns2:MatchResultItem" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <!-- operation request element -->
+  <element name="Standardise">
+   <complexType>
+    <sequence>
+     <element name="Grammar" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Input" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="StandardiseResult">
+   <complexType>
+    <sequence>
+     <element name="OutputFields" type="ns2:NameValueArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="BatchStan">
+   <complexType>
+    <sequence>
+     <element name="Grammar" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="InputRecords" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputDelimiter" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="BatchStanResult">
+   <complexType>
+    <sequence>
+     <element name="FieldNames" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputRecords" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetGrammarInfo">
+   <complexType>
+    <sequence>
+     <element name="Grammar" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GrammarInfoResult">
+   <complexType>
+    <sequence>
+     <element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputFormat" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputDelimiter" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputQualifier" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SuggestedDivider" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="OutputFields" type="ns2:OutputFieldInfoArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetAddresses">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="InputFields" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="StartFrom" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetAddressesResult">
+   <complexType>
+    <sequence>
+     <element name="Addresses" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="FindStatus" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetAddressesHint">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="LocalityLine" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="AddressLine" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetHintAddressesResult">
+   <complexType>
+    <sequence>
+     <element name="Addresses" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="FindStatus" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DpidToAddress">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Dpid" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DpidToAddressResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetProperties">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetPropertiesResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ValidateFullAddress">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Input" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Options" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="ValidateFullAddressResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FormatAddress">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Input" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Options" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="FormatAddressResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="BuildBarcode">
+   <complexType>
+    <sequence>
+     <element name="FormatControl" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Dpid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="CustomerInfo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="NCoding" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="BuildBarcodeResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ValidateAddressWithOptions">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="LocalityLine" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="AddressLine" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Options" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="GenerateAddress" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DrillDown" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="StartFrom" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="ValAddrResult">
+   <complexType>
+    <sequence>
+     <element name="Address" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="AddressQualityFlag" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Addresses" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="FindStatus" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="PolygonSearch">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Polygon" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Start" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Attachment" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="ZipAttachment" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="PolygonResult">
+   <complexType>
+    <sequence>
+     <element name="Addresses" type="ns2:StringArray" minOccurs="1" maxOccurs="1"/>
+     <element name="AddressesAttachment" type="ns2:AttachmentData" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="AttachmentChecksum" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FileAcknowledge">
+   <complexType>
+    <sequence>
+     <element name="FileName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="FileAcknowledgeResult">
+   <complexType>
+    <sequence>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetSearchStatistics">
+   <complexType>
+    <sequence>
+     <element name="Database" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Search" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Statistic" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Param1" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Param2" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="StringResult">
+   <complexType>
+    <sequence>
+     <element name="Result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RefreshModules">
+   <complexType>
+    <sequence>
+     <element name="Module" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="RefreshModulesResult">
+   <complexType>
+    <sequence>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="HeartBeat">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="MatchRecord">
+   <complexType>
+    <sequence>
+     <element name="MatchSpec" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Record" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="MatchRecordResult">
+   <complexType>
+    <sequence>
+     <element name="Results" type="ns2:MatchResultArray" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="StandardiseAndWrite">
+   <complexType>
+    <sequence>
+     <element name="MatchSpec" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Record" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Properties" type="ns2:NameValueArray" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="StandardiseAndWriteResult">
+   <complexType>
+    <sequence>
+     <element name="ErrorString" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorCode" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="StoredProcedureOutput" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+</types>
+<message name="Standardise">
+ <part name="parameters" element="ns2:Standardise"/>
+</message>
+<message name="StandardiseResult">
+ <part name="parameters" element="ns2:StandardiseResult"/>
+</message>
+<message name="BatchStan">
+ <part name="parameters" element="ns2:BatchStan"/>
+</message>
+<message name="BatchStanResult">
+ <part name="parameters" element="ns2:BatchStanResult"/>
+</message>
+<message name="GetGrammarInfo">
+ <part name="parameters" element="ns2:GetGrammarInfo"/>
+</message>
+<message name="GrammarInfoResult">
+ <part name="parameters" element="ns2:GrammarInfoResult"/>
+</message>
+<message name="GetAddresses">
+ <part name="parameters" element="ns2:GetAddresses"/>
+</message>
+<message name="GetAddressesResult">
+ <part name="parameters" element="ns2:GetAddressesResult"/>
+</message>
+<message name="GetAddressesHint">
+ <part name="parameters" element="ns2:GetAddressesHint"/>
+</message>
+<message name="GetHintAddressesResult">
+ <part name="parameters" element="ns2:GetHintAddressesResult"/>
+</message>
+<message name="DpidToAddress">
+ <part name="parameters" element="ns2:DpidToAddress"/>
+</message>
+<message name="DpidToAddressResult">
+ <part name="parameters" element="ns2:DpidToAddressResult"/>
+</message>
+<message name="GetProperties">
+ <part name="parameters" element="ns2:GetProperties"/>
+</message>
+<message name="GetPropertiesResult">
+ <part name="parameters" element="ns2:GetPropertiesResult"/>
+</message>
+<message name="ValidateFullAddress">
+ <part name="parameters" element="ns2:ValidateFullAddress"/>
+</message>
+<message name="ValidateFullAddressResult">
+ <part name="parameters" element="ns2:ValidateFullAddressResult"/>
+</message>
+<message name="FormatAddress">
+ <part name="parameters" element="ns2:FormatAddress"/>
+</message>
+<message name="FormatAddressResult">
+ <part name="parameters" element="ns2:FormatAddressResult"/>
+</message>
+<message name="BuildBarcode">
+ <part name="parameters" element="ns2:BuildBarcode"/>
+</message>
+<message name="BuildBarcodeResult">
+ <part name="parameters" element="ns2:BuildBarcodeResult"/>
+</message>
+<message name="ValidateAddressWithOptions">
+ <part name="parameters" element="ns2:ValidateAddressWithOptions"/>
+</message>
+<message name="ValAddrResult">
+ <part name="parameters" element="ns2:ValAddrResult"/>
+</message>
+<message name="PolygonSearch">
+ <part name="parameters" element="ns2:PolygonSearch"/>
+</message>
+<message name="PolygonResult">
+ <part name="parameters" element="ns2:PolygonResult"/>
+ <part name="attachments" type="xsd:base64Binary"/>
+</message>
+<message name="FileAcknowledge">
+ <part name="parameters" element="ns2:FileAcknowledge"/>
+</message>
+<message name="FileAcknowledgeResult">
+ <part name="parameters" element="ns2:FileAcknowledgeResult"/>
+</message>
+<message name="GetSearchStatistics">
+ <part name="parameters" element="ns2:GetSearchStatistics"/>
+</message>
+<message name="StringResult">
+ <part name="parameters" element="ns2:StringResult"/>
+</message>
+<message name="RefreshModules">
+ <part name="parameters" element="ns2:RefreshModules"/>
+</message>
+<message name="RefreshModulesResult">
+ <part name="parameters" element="ns2:RefreshModulesResult"/>
+</message>
+<message name="HeartBeat">
+ <part name="parameters" element="ns2:HeartBeat"/>
+</message>
+<message name="MatchRecord">
+ <part name="parameters" element="ns2:MatchRecord"/>
+</message>
+<message name="MatchRecordResult">
+ <part name="parameters" element="ns2:MatchRecordResult"/>
+</message>
+<message name="StandardiseAndWrite">
+ <part name="parameters" element="ns2:StandardiseAndWrite"/>
+</message>
+<message name="StandardiseAndWriteResult">
+ <part name="parameters" element="ns2:StandardiseAndWriteResult"/>
+</message>
+<portType name="iqoffice2PortType">
+ <operation name="Standardise">
+  <documentation>Standardises Input according to Grammar</documentation>
+  <input message="tns:Standardise"/>
+  <output message="tns:StandardiseResult"/>
+ </operation>
+ <operation name="BatchStan">
+  <documentation>Standardises multiple Input records according to Grammar</documentation>
+  <input message="tns:BatchStan"/>
+  <output message="tns:BatchStanResult"/>
+ </operation>
+ <operation name="GetGrammarInfo">
+  <documentation>Returns information about a standardisation grammar</documentation>
+  <input message="tns:GetGrammarInfo"/>
+  <output message="tns:GrammarInfoResult"/>
+ </operation>
+ <operation name="GetAddresses">
+  <documentation>Lists addresses matching given criteria</documentation>
+  <input message="tns:GetAddresses"/>
+  <output message="tns:GetAddressesResult"/>
+ </operation>
+ <operation name="GetAddressesHint">
+  <documentation>Searches for addresses matching given criteria</documentation>
+  <input message="tns:GetAddressesHint"/>
+  <output message="tns:GetHintAddressesResult"/>
+ </operation>
+ <operation name="DpidToAddress">
+  <documentation>Looks up an address by its DPID</documentation>
+  <input message="tns:DpidToAddress"/>
+  <output message="tns:DpidToAddressResult"/>
+ </operation>
+ <operation name="GetProperties">
+  <documentation>Returns specific information from the server</documentation>
+  <input message="tns:GetProperties"/>
+  <output message="tns:GetPropertiesResult"/>
+ </operation>
+ <operation name="ValidateFullAddress">
+  <documentation>Validates the Input address</documentation>
+  <input message="tns:ValidateFullAddress"/>
+  <output message="tns:ValidateFullAddressResult"/>
+ </operation>
+ <operation name="FormatAddress">
+  <documentation>Returns the Input address formatted</documentation>
+  <input message="tns:FormatAddress"/>
+  <output message="tns:FormatAddressResult"/>
+ </operation>
+ <operation name="BuildBarcode">
+  <documentation>Creates a 4-state barcode string from the given DPID</documentation>
+  <input message="tns:BuildBarcode"/>
+  <output message="tns:BuildBarcodeResult"/>
+ </operation>
+ <operation name="ValidateAddressWithOptions">
+  <documentation>Validates the address and searches for matching options</documentation>
+  <input message="tns:ValidateAddressWithOptions"/>
+  <output message="tns:ValAddrResult"/>
+ </operation>
+ <operation name="PolygonSearch">
+  <documentation>Searches for addresses in given polygon, optionally returning result in MTOM format</documentation>
+  <input message="tns:PolygonSearch"/>
+  <output message="tns:PolygonResult"/>
+ </operation>
+ <operation name="FileAcknowledge">
+  <documentation>tells server that file received</documentation>
+  <input message="tns:FileAcknowledge"/>
+  <output message="tns:FileAcknowledgeResult"/>
+ </operation>
+ <operation name="GetSearchStatistics">
+  <documentation>retrieves statistics of a given search</documentation>
+  <input message="tns:GetSearchStatistics"/>
+  <output message="tns:StringResult"/>
+ </operation>
+ <operation name="RefreshModules">
+  <documentation>Refresh Modules</documentation>
+  <input message="tns:RefreshModules"/>
+  <output message="tns:RefreshModulesResult"/>
+ </operation>
+ <operation name="HeartBeat">
+  <documentation>tests server is working</documentation>
+  <input message="tns:HeartBeat"/>
+  <output message="tns:StringResult"/>
+ </operation>
+ <operation name="MatchRecord">
+  <documentation>Matches a record against a file</documentation>
+  <input message="tns:MatchRecord"/>
+  <output message="tns:MatchRecordResult"/>
+ </operation>
+ <operation name="StandardiseAndWrite">
+  <documentation>Standardises a record and writes it to a stored procecure</documentation>
+  <input message="tns:StandardiseAndWrite"/>
+  <output message="tns:StandardiseAndWriteResult"/>
+ </operation>
+</portType>
+<binding name="iqoffice2" type="tns:iqoffice2PortType">
+ <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="Standardise">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="BatchStan">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetGrammarInfo">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetAddresses">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetAddressesHint">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DpidToAddress">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetProperties">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ValidateFullAddress">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="FormatAddress">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="BuildBarcode">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ValidateAddressWithOptions">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="PolygonSearch">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+   <MIME:multipartRelated>
+    <MIME:part>
+     <SOAP:body parts="parameters" use="literal"/>
+    </MIME:part>
+    <MIME:part>
+     <MIME:content part="attachments" type="application/x-gzip"/>
+    </MIME:part>
+   </MIME:multipartRelated>
+  </output>
+ </operation>
+ <operation name="FileAcknowledge">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetSearchStatistics">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RefreshModules">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="HeartBeat">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="MatchRecord">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="StandardiseAndWrite">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+</binding>
+<service name="iqoffice2">
+ <documentation>Intech's standardisation and address validation service</documentation>
+ <port name="iqoffice2" binding="tns:iqoffice2">
+  <SOAP:address location="http://demo1.intechiq.com/"/>
+ </port>
+</service>
+</definitions>
